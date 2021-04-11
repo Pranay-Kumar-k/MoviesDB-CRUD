@@ -96,3 +96,22 @@ export const getItemsReq = () => ({
           console.log(err)
       })
   }
+
+
+  export const deleteMovie = (_id,token) => (dispatch) => {
+    console.log(_id,token)
+    return axios({
+        method:"DELETE",
+        url:`http://localhost:2020/movie/${_id}`,
+        headers:{
+          "Authorization" : `Bearer ${token}`
+        }
+    })
+    .then((res) => {
+        console.log(res)
+        dispatch(getItemsData(token))
+    })
+    .catch(err => {
+        console.log(err)
+    })
+}
