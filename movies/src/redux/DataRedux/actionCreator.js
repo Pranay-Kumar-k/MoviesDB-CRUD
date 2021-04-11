@@ -74,3 +74,25 @@ export const getItemsReq = () => ({
         dispatch(postItemFailure())
     })
   } 
+
+
+  export const updateMovie = (_id,payload,token) => (dispatch) => {
+      console.log(_id,payload,token)
+      return axios({
+          method:"PUT",
+          url:`http://localhost:2020/movie/${_id}`,
+          headers:{
+            "Authorization" : `Bearer ${token}`
+          },
+          data:{
+                ...payload
+          }
+      })
+      .then((res) => {
+          console.log(res)
+          dispatch(getItemsData(token))
+      })
+      .catch(err => {
+          console.log(err)
+      })
+  }
