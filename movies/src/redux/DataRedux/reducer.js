@@ -1,10 +1,11 @@
-import { GET_ITEMS_FAILURE, GET_ITEMS_REQUEST, GET_ITEMS_SUCCESS } from "./actionType";
+import { GET_ITEMS_FAILURE, GET_ITEMS_REQUEST, GET_ITEMS_SUCCESS, POST_ITEM_FAILURE, POST_ITEM_REQUEST, POST_ITEM_SUCCESS } from "./actionType";
 
 
 const initState = {
     isLoading:true,
     isError:false,
-    movies:[]
+    movies:[],
+    newMovie:[]
 }
 
 const reducer = (state = initState, {type,payload}) => {
@@ -20,6 +21,24 @@ const reducer = (state = initState, {type,payload}) => {
                 movies:payload
             }
         case GET_ITEMS_FAILURE:
+            return {
+                ...state,
+                isLoading:false,
+                isError:true
+            }
+        case POST_ITEM_REQUEST:
+            return {
+                ...state,
+            }
+        case POST_ITEM_SUCCESS:
+            const newMovies = [...this.state.movies,payload]
+            return {
+                ...state,
+                isLoading:false,
+                newMovie:payload,
+                movies:newMovies
+            }
+        case POST_ITEM_FAILURE:
             return {
                 ...state,
                 isLoading:false,

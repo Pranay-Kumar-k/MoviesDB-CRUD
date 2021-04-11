@@ -1,4 +1,4 @@
-import { GET_ITEMS_FAILURE, GET_ITEMS_REQUEST, GET_ITEMS_SUCCESS } from "./actionType";
+import { GET_ITEMS_FAILURE, GET_ITEMS_REQUEST, GET_ITEMS_SUCCESS, POST_ITEM_FAILURE, POST_ITEM_REQUEST, POST_ITEM_SUCCESS } from "./actionType";
 import axios from "axios"
 
 export const getItemsReq = () => ({
@@ -19,7 +19,6 @@ export const getItemsReq = () => ({
   export const getItemsData = (token) => (dispatch) => {
       console.log(token)
       dispatch(getItemsReq())
-      const header = `Authorization: Bearer`
     return axios({
         method:"GET",
         url:"http://localhost:2020/movie",
@@ -36,3 +35,42 @@ export const getItemsReq = () => ({
         dispatch(getItemsFailure(err))
     })
   }
+
+
+  export const postItemReq = () => ({
+    type: POST_ITEM_REQUEST
+  });
+  
+  export const postItemSuccess = (payload) => ({
+    type: POST_ITEM_SUCCESS,
+    payload
+  });
+  
+  export const postItemFailure = () => ({
+    type: POST_ITEM_FAILURE,
+  });
+
+
+  export const postMovieData = (payload,token) => (dispatch) => {
+      console.log(payload,token)
+    dispatch(postItemReq())
+    return axios({
+        method:"POST",
+        url:"http://localhost:2020/movie",
+        headers:{
+            "Authorization" : `Bearer ${token}`
+        },
+        data:{
+            ...payload
+        }
+    })
+    .then((res) => {
+        console.log(res)
+        dispatch(postItemSuccess(res.data))
+        dispatch(getItemsData(token))
+    })
+    .catch(err => {
+        console.log(err)
+        dispatch(postItemFailure())
+    })
+  } 
