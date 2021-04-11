@@ -20,9 +20,14 @@ export default function Home() {
         dispatch(getItemsData(token))
     },[])
     console.log(data)
+
     const gotoAddMoviePage = () => {
         history.push("/addMovie");
     } 
+
+    const handleLogout = () => {
+        history.push("/")
+    }
     return (
         <div>
             <div>
@@ -39,6 +44,20 @@ export default function Home() {
                     onClick={gotoAddMoviePage}
                     >
                     Add Movie{" "}
+                </Button>
+                <Button
+                    style={{backgroundColor: "red",
+                            color: "white",
+                            fontWeight:600,
+                            height: "40px",
+                            marginRight: "10px",
+                            borderRadius:"5px",
+                            margin:"20px"
+                        }}
+                    color="inherit"
+                    onClick={handleLogout}
+                    >
+                    Logout{" "}
                 </Button>
             </div>
             {!ready ? (<CircularProgress disableShrink />) : (<MoviesTable movies={data} />)}
