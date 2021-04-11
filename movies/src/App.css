@@ -1,38 +1,12 @@
 .App {
   text-align: center;
+    width:100%;
+    display:block;
+    overflow: scroll;
+    height:auto;
+    background: url("https://assets.nflxext.com/ffe/siteui/vlv3/92bb3a0b-7e91-40a0-b27b-f2c3ac9ef6e4/aed392db-5550-48d8-9f4e-1f1218b7add2/IN-en-20210322-popsignuptwoweeks-perspective_alpha_website_small.jpg") fixed no-repeat ;
+    background-size:cover;
+    background-position-y: fixed;
+    opacity:"0.85";
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
