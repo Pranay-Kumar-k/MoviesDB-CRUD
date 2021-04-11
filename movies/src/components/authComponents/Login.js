@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import { Button, TextField, Typography } from '@material-ui/core';
 import {useDispatch, useSelector} from "react-redux";
 import { loginUser } from "../../redux/LoginRedux/actionCreator";
 import {useHistory} from "react-router-dom";
-import { getItemsData } from '../../redux/DataRedux/actionCreator';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -48,25 +47,17 @@ export default function Login() {
   const [password,setPassword] = useState("");
   const dispatch = useDispatch();
   const history = useHistory();
-  const data = useSelector(state => state.movies.movies)
   const {isLoading,isError,isAuth,user,token} = useSelector(state => state.login)
 
   const handleLogin = (e) => {
       e.preventDefault()
     console.log(phone,password)
     dispatch(loginUser({phone,password}))
-    redirect()
   } 
-  // {isAuth ?  history.push("/home") : history.push("/login")}
-
-  const redirect = () => {
-    if(data) {
-      dispatch(getItemsData(token))
-    }
-    if(isAuth) {
-      history.push("/home")
-    }
-  }
+  
+  useEffect(() => {
+    token && history.push("/home")
+  },[token])
 
   const handleSignIn = (e) => {
     e.preventDefault()

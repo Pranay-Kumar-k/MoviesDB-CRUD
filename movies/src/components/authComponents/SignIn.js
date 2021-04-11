@@ -4,7 +4,7 @@ import Paper from '@material-ui/core/Paper';
 import { Button, TextField, Typography } from '@material-ui/core';
 import {useDispatch, useSelector} from "react-redux";
 import { registerUser } from '../../redux/RegistrationRedux/actionCreator';
-import {Redirect, useHistory} from "react-router-dom";
+import {Redirect} from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -47,7 +47,6 @@ export default function SignIn() {
   const [phone,setPhone] = useState(null);
   const [password,setPassword] = useState("");
   const dispatch = useDispatch();
-  const history = useHistory();
   const {isLoading,isError,isRegister} = useSelector(state => state.registration)
   console.log(isRegister)
 
@@ -55,19 +54,10 @@ export default function SignIn() {
       e.preventDefault()
     console.log(phone,password)
     dispatch(registerUser({phone,password}))
-    redirect()
   } 
-  
-  const redirect = () => {
-    if(isRegister && !isLoading) {
-      history.push("/login")
-    }
-    history.push("/signin")
-  } 
-
   return (
     <div>
-      {!isRegister && (<Paper elevation={3} className={classes.root}>
+      {!isRegister ? (<Paper elevation={3} className={classes.root}>
         <h1>Sign In</h1>
           <form className={classes.form}>
               <TextField
@@ -104,7 +94,7 @@ export default function SignIn() {
                   SIGN UP
               </Button>
           </form>
-      </Paper>)}
+      </Paper>): <Redirect to="/login" />}
       </div>
   );
 }
