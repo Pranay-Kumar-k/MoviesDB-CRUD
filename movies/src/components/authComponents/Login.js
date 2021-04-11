@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import { Button, TextField } from '@material-ui/core';
+import {useDispatch, useSelector} from "react-redux";
+import { loginUser } from "../../redux/LoginRedux/actionCreator";
+import {Redirect, useHistory} from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -42,12 +45,18 @@ export default function Login() {
   const classes = useStyles();
   const [phone,setPhone] = useState(null);
   const [password,setPassword] = useState("");
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const {isLoading,isError,isAuth,user,token} = useSelector(state => state.login)
 
   const handleSignIn = (e) => {
       e.preventDefault()
     console.log(phone,password)
+    dispatch(loginUser({phone,password}))
   } 
+  {isAuth && history.push("/home")}
 
+  console.log(user,token)
   return (
       <Paper elevation={3} className={classes.root}>
           <h1>Login</h1>
