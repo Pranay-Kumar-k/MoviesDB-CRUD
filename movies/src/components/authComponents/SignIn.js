@@ -23,7 +23,9 @@ const useStyles = makeStyles((theme) => ({
     textAlign:'center',
     color:"white",
     height:"50px",
-    fontWeight:"500"
+    fontWeight:"500",
+    padding:"5px",
+    border:"5px"
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
