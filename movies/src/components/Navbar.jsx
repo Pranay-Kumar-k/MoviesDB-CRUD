@@ -3,6 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
+import {useHistory} from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     root:{
@@ -39,8 +40,23 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+// Navbar to guide the user to make both Signup and Login operations
+// onClick on Sign In button Redirects the user to SignIn page
+// onClick on Login button Redirects the user to SignIn page
+
 const Navbar = () => {
   const classes = useStyles();
+  const history = useHistory();
+
+  const gotoSignIn = (e) => {
+    e.preventDefault()
+    history.push("/signin")
+  }
+
+  const gotoLogin = (e) => {
+    e.preventDefault()
+    history.push("/login")
+  }
 
   return (
     <div>
@@ -54,6 +70,7 @@ const Navbar = () => {
                 <Button
                   className={classes.button}
                   color="inherit"
+                  onClick={gotoSignIn}
                 >
                   Sign In{" "}
                 </Button>
@@ -62,6 +79,7 @@ const Navbar = () => {
               <Button 
                 className={classes.button}
                 color="inherit"
+                onClick={gotoLogin}
                 >
                     Login
               </Button>

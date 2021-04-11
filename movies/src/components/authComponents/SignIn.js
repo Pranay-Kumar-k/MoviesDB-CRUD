@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import { Button, TextField, Typography } from '@material-ui/core';
+import {useDispatch, useSelector} from "react-redux";
+import { registerUser } from '../../redux/RegistrationRedux/actionCreator';
+import {Redirect, useHistory} from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -41,52 +44,60 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignIn() {
   const classes = useStyles();
-  const [phone,setPhone] = useState(0);
+  const [phone,setPhone] = useState(null);
   const [password,setPassword] = useState("");
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const {isLoading,isError,isRegister} = useSelector(state => state.registration)
+  console.log(isRegister)
 
   const handleSignIn = (e) => {
       e.preventDefault()
     console.log(phone,password)
+    dispatch(registerUser({phone,password}))
   } 
+  {isRegister && history.push("/login")}
 
   return (
-      <Paper elevation={3} className={classes.root}>
-          <h1>Sign In</h1>
-            <form className={classes.form}>
-                <TextField
-                    className={classes.text}
-                    InputProps={{ disableUnderline: true ,style: {color: "white",height:"100%",marginLeft:"20px"}}}
-                    required
-                    fullWidth
-                    label="PHONE NUMBER"
-                    name="phone"
-                    type="number"
-                    value={phone}
-                    onChange={(e)=>setPhone(e.target.value)}
-                />
-                <TextField
-                    className={classes.text}
-                    InputProps={{ disableUnderline: true ,style: {color: "white",marginLeft:"20px"}}}
-                    required
-                    fullWidth
-                    label="PASSWORD"
-                    name="password"
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                />
-                <Typography variant="caption">BY CLICKING BELOW TO SIGN UP, YOU'RE AGREEING TO OUR TERMS OF USE AND PRIVACY POLICY </Typography>
-                <Button
-                    type="submit"
-                    fullWidth
-                    variant="contained"
-                    color="secondary"
-                    className={classes.submit}
-                    onClick={handleSignIn}
-                >
-                    SIGN UP
-                </Button>
-            </form>
-      </Paper>
+    <div>
+      {isLoading ? (<Paper elevation={3} className={classes.root}>
+        <h1>Sign In</h1>
+          <form className={classes.form}>
+              <TextField
+                  className={classes.text}
+                  InputProps={{ disableUnderline: true ,style: {color: "white",height:"100%",marginLeft:"20px"}}}
+                  required
+                  fullWidth
+                  label="PHONE NUMBER"
+                  name="phone"
+                  type="number"
+                  value={phone}
+                  onChange={(e)=>setPhone(e.target.value)}
+              />
+              <TextField
+                  className={classes.text}
+                  InputProps={{ disableUnderline: true ,style: {color: "white",marginLeft:"20px"}}}
+                  required
+                  fullWidth
+                  label="PASSWORD"
+                  name="password"
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+              />
+              <Typography variant="caption">BY CLICKING BELOW TO SIGN UP, YOU'RE AGREEING TO OUR TERMS OF USE AND PRIVACY POLICY </Typography>
+              <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="secondary"
+                  className={classes.submit}
+                  onClick={handleSignIn}
+              >
+                  SIGN UP
+              </Button>
+          </form>
+      </Paper>) : <Redirect to="/login" />}
+      </div>
   );
 }

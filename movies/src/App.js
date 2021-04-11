@@ -1,14 +1,12 @@
 import React from "react";
 import './App.css';
-import SignIn from "./components/authComponents/SignIn";
-import Login from "./components/authComponents/Login";
-import Navbar from "./components/Navbar";
+import Routes from "./routes/Routes";
 
+// Adding Routes to all the pages in application
 function App() {
   return (
     <div className="App">
-      <Navbar />
-      <Login />
+        <Routes /> 
     </div>
   );
 }
