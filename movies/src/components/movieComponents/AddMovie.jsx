@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
-import { Button, TextField, Typography } from '@material-ui/core';
+import { Button, TextField } from '@material-ui/core';
 import {useDispatch, useSelector} from "react-redux";
-import { loginUser } from "../../redux/LoginRedux/actionCreator";
 import {useHistory} from "react-router-dom";
-import { getItemsData } from '../../redux/DataRedux/actionCreator';
+import { getItemsData, postMovieData } from '../../redux/DataRedux/actionCreator';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
     padding:"5px",
   },
   submit: {
-    margin: theme.spacing(1, 0, 5),
+    margin: theme.spacing(3, 0, 2),
     borderRadius:"5px",
     background:"red",
     fontWeight:"600",
@@ -44,21 +43,24 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Login() {
   const classes = useStyles();
-  const [phone,setPhone] = useState(null);
-  const [password,setPassword] = useState("");
+  const [title,setTitle] = useState("");
+  const [genre,setGenre] = useState("");
+  const [year,setYear] = useState(null);
   const dispatch = useDispatch();
   const history = useHistory();
   const data = useSelector(state => state.movies.movies)
   const {isLoading,isError,isAuth,user,token} = useSelector(state => state.login)
 
-  const handleLogin = (e) => {
+  const addMovie = (e) => {
       e.preventDefault()
-    console.log(phone,password)
-    dispatch(loginUser({phone,password}))
-    redirect()
+      const payload = {
+          movie_title:title,
+          genre:genre,
+          released_year:year
+      }
+      dispatch(postMovieData(payload,token))
+        redirect()
   } 
-  // {isAuth ?  history.push("/home") : history.push("/login")}
-
   const redirect = () => {
     if(data) {
       dispatch(getItemsData(token))
@@ -68,58 +70,53 @@ export default function Login() {
     }
   }
 
-  const handleSignIn = (e) => {
-    e.preventDefault()
-    history.push("/signin")
-  }
-
   console.log(user,token)
   return (
       <Paper elevation={3} className={classes.root}>
-          <h1>Login</h1>
+          <h1>Add Movie</h1>
             <form className={classes.form}>
                 <TextField
                     className={classes.text}
                     InputProps={{ disableUnderline: true ,style: {color: "white",height:"100%",marginLeft:"20px"}}}
                     required
                     fullWidth
-                    label="PHONE NUMBER"
-                    name="phone"
-                    type="number"
-                    value={phone}
-                    onChange={(e)=>setPhone(e.target.value)}
+                    label="Title of the Movie"
+                    name="title"
+                    type="text"
+                    value={title}
+                    onChange={(e)=>setTitle(e.target.value)}
                 />
                 <TextField
                     className={classes.text}
                     InputProps={{ disableUnderline: true ,style: {color: "white",marginLeft:"20px"}}}
                     required
                     fullWidth
-                    label="PASSWORD"
-                    name="password"
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    label="Genre"
+                    name="genre"
+                    type="text"
+                    value={genre}
+                    onChange={(e) => setGenre(e.target.value)}
+                />
+                <TextField
+                    className={classes.text}
+                    InputProps={{ disableUnderline: true ,style: {color: "white",marginLeft:"20px"}}}
+                    required
+                    fullWidth
+                    label="Released Year"
+                    name="released year"
+                    type="number"
+                    value={year}
+                    onChange={(e) => setYear(e.target.value)}
                 />
                 <Button
                     type="submit"
                     fullWidth
                     variant="contained"
-                    color="secondary"
+                    color="inherit"
                     className={classes.submit}
-                    onClick={handleLogin}
+                    onClick={addMovie}
                 >
-                    Login
-                </Button>
-                <Typography>Dont have an account ?</Typography>
-                <Button
-                    type="submit"
-                    fullWidth
-                    variant="contained"
-                    color="secondary"
-                    className={classes.submit}
-                    onClick={handleSignIn}
-                >
-                    Sign In
+                    Add Movie
                 </Button>
             </form>
       </Paper>

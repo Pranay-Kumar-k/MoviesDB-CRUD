@@ -1,18 +1,35 @@
-import React, { useEffect, useState } from 'react';
-import {useDispatch, useSelector} from "react-redux";
-import { getItemsData } from '../../redux/DataRedux/actionCreator';
+import React, { useEffect} from 'react';
+import { useSelector} from "react-redux";
+import MoviesTable from './MoviesTable';
+import Button from "@material-ui/core/Button";
+import {useHistory} from "react-router-dom";
 
 export default function Home() {
-    const dispatch = useDispatch();
-    const data = useSelector(state => state.movies.movies)
-    const token = useSelector(state => state.login.token);
-    console.log(data,token)
-    useEffect(() => {
-        dispatch(getItemsData(token))
-    }, [])
+    const data = useSelector(state => state.movies.movies);
+    const history = useHistory();
+    console.log(data)
+    const gotoAddMoviePage = () => {
+        history.push("/addMovie");
+    } 
     return (
         <div>
-            Home
+            <div>
+                <Button
+                    style={{backgroundColor: "red",
+                            color: "white",
+                            fontWeight:600,
+                            height: "40px",
+                            marginRight: "10px",
+                            borderRadius:"5px",
+                            margin:"20px"
+                        }}
+                    color="inherit"
+                    onClick={gotoAddMoviePage}
+                    >
+                    Add Movie{" "}
+                </Button>
+            </div>
+            {data ? (<MoviesTable movies={data} />) : null}
         </div>
     )
 }

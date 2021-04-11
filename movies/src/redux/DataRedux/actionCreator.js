@@ -1,4 +1,4 @@
-import { GET_ITEMS_FAILURE, GET_ITEMS_REQUEST, GET_ITEMS_SUCCESS, POST_ITEM_FAILURE, POST_ITEM_REQUEST, POST_ITEM_SUCCESS } from "./actionType";
+import { GET_ITEMS_FAILURE, GET_ITEMS_REQUEST, GET_ITEMS_SUCCESS, POST_ITEM_FAILURE, POST_ITEM_REQUEST, POST_ITEM_SUCCESS,GET_ITEM_REQUEST,GET_ITEM_SUCCESS,GET_ITEM_FAILURE } from "./actionType";
 import axios from "axios"
 
 export const getItemsReq = () => ({
@@ -113,5 +113,38 @@ export const getItemsReq = () => ({
     })
     .catch(err => {
         console.log(err)
+    })
+}
+
+export const getItemReq = () => ({
+    type: GET_ITEM_REQUEST
+  });
+  
+  export const getItemSuccess = (payload) => ({
+    type: GET_ITEM_SUCCESS,
+    payload
+  });
+  
+  export const getItemFailure = () => ({
+    type: GET_ITEM_FAILURE,
+  });
+
+
+export const getMovieById = (_id,token) => (dispatch) => {
+    dispatch(getItemReq())
+    return axios({
+        method:"GET",
+        url:`http://localhost:2020/movie/${_id}`,
+        headers:{
+            "Authorization" : `Bearer ${token}`
+        }
+    })
+    .then((res) => {
+        console.log(res)
+        dispatch(getItemSuccess(res.data))
+    })
+    .catch(err => {
+        console.log(err)
+        dispatch(getItemFailure())
     })
 }

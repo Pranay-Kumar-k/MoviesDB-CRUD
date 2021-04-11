@@ -55,12 +55,19 @@ export default function SignIn() {
       e.preventDefault()
     console.log(phone,password)
     dispatch(registerUser({phone,password}))
+    redirect()
   } 
-  {isRegister && history.push("/login")}
+  
+  const redirect = () => {
+    if(isRegister && !isLoading) {
+      history.push("/login")
+    }
+    history.push("/signin")
+  } 
 
   return (
     <div>
-      {isLoading ? (<Paper elevation={3} className={classes.root}>
+      {!isRegister && (<Paper elevation={3} className={classes.root}>
         <h1>Sign In</h1>
           <form className={classes.form}>
               <TextField
@@ -97,7 +104,7 @@ export default function SignIn() {
                   SIGN UP
               </Button>
           </form>
-      </Paper>) : <Redirect to="/login" />}
+      </Paper>)}
       </div>
   );
 }

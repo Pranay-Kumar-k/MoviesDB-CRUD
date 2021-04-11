@@ -3,10 +3,16 @@
     width:100%;
     display:block;
     overflow: scroll;
-    height:1200px;
+    height:1800px;
     background: url("https://assets.nflxext.com/ffe/siteui/vlv3/92bb3a0b-7e91-40a0-b27b-f2c3ac9ef6e4/aed392db-5550-48d8-9f4e-1f1218b7add2/IN-en-20210322-popsignuptwoweeks-perspective_alpha_website_small.jpg") fixed no-repeat ;
     background-size:cover;
     background-position-y: fixed;
-    opacity:"0.85";
 }
-
+*{
+  -ms-overflow-style: none;
+  outline: none;
+  text-decoration: none;
+}
+::-webkit-scrollbar {
+  display: none;
+}

@@ -38,6 +38,20 @@ const useStyles = makeStyles((theme) => ({
         maxWidth: "70%",
         minHeight: "65px",
     },
+    welcome:{
+      marginTop:"25%",
+      background:"whitesmoke",
+      width:"80%",
+      borderRadius:"10px",
+      opacity:"0.8",
+      marginLeft:"10%",
+      padding:"10px",
+      justifyContent:"center"
+    },
+    note:{
+      color:"red",
+      fontWeight:"1000",
+    }
 }));
 
 // Navbar to guide the user to make both Signup and Login operations
@@ -60,6 +74,9 @@ const Navbar = () => {
 
   return (
     <div>
+      <div className={classes.welcome}>
+        <h1 className={classes.note}>Click on Sign up or Login to your account to continue...</h1>
+      </div>
       <AppBar
         position="fixed"
         elevation={0}
