@@ -21,8 +21,9 @@ import { deleteMovie, getItemsData, updateMovie } from '../../redux/DataRedux/ac
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import Tooltip from '@material-ui/core/Tooltip';
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -47,13 +48,21 @@ const useStyles = makeStyles((theme) => ({
   table: {
     width:"100%",
     background:"whitesmoke",
-    opacity:"0.8",
+    opacity:"0.9",
   },
   delete:{
-    marginLeft: 10
+    marginLeft: 10,
+    cursor:"pointer"
+  },
+  view:{
+    marginRight: 10,
+    background:"black",
+    cursor:"pointer"
   },
   edit:{
-    marginRight:10
+    marginRight:10,
+    marginLeft:10,
+    cursor:"pointer"
   },
   modal: {
     display: 'flex',
@@ -62,7 +71,6 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     backgroundColor: theme.palette.background.paper,
-    border: '2px solid #000',
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
   },
@@ -82,7 +90,6 @@ const useStyles = makeStyles((theme) => ({
   body:{
     color:"black",
     fontWeight:"900",
-    cursor:"pointer"
   },
   card:{
     width:"auto",
@@ -95,7 +102,6 @@ export const MoviesTable = ({movies}) => {
   const classes = useStyles();
   const [open,setOpen] = useState(false);
   const [edit,setEdit] = useState(false);
-  const [data,setData] = useState("");
   const [title,setTitle] = useState("")
   const [genre,setGenre] = useState("")
   const [_id,setId] = useState("")
@@ -106,10 +112,8 @@ export const MoviesTable = ({movies}) => {
 
   
   useEffect(() => {
-    setData(movies)
     dispatch(getItemsData(token))
-    setData(Movies)
-  },[data])
+  },[])
 
 
   const handleClose = () => {
@@ -138,7 +142,7 @@ export const MoviesTable = ({movies}) => {
     dispatch(deleteMovie(item._id,token))
   };
 
-  const handleClick = (item) => {
+  const handleView = (item) => {
     console.log(item)
     setOpen(true)
     setEdit(false)
@@ -148,7 +152,8 @@ export const MoviesTable = ({movies}) => {
   }
 
   return (
-    <TableContainer>
+   <div>
+     {movies ? ( <TableContainer>
       <Table className={classes.table} aria-label="customized table">
         <TableHead>
           <TableRow>
@@ -160,18 +165,25 @@ export const MoviesTable = ({movies}) => {
           </TableRow>
         </TableHead>
         <TableBody className={classes.body}>
-          {movies && movies.data.map((item) => (
+          {movies ? movies.data.map((item) => (
             <StyledTableRow key={item.id}>
-              <StyledTableCell component="th" scope="row" className={classes.body} onClick = {(e) => handleClick(item)}>
+              <StyledTableCell component="th" scope="row" className={classes.body}>
                 {item.movie_title}
               </StyledTableCell>
               <StyledTableCell align="right" className={classes.body}>{item.genre}</StyledTableCell>
               <StyledTableCell align="right" className={classes.body}>{item.released_year}</StyledTableCell>
               <StyledTableCell align="right" className={classes.body}>{item.status}</StyledTableCell>
               <StyledTableCell align="right">
-              <Button variant="contained" color="primary" onClick={(e) => handleEdit(item)} className={classes.edit}>
-                <EditIcon />
-              </Button>
+                  <Button variant="contained" color="primary" onClick={(e) => handleView(item)} className={classes.view}>
+                    <Tooltip title="View details"  placement="top">
+                      <VisibilityIcon /> 
+                    </Tooltip>
+                  </Button> |
+                  <Button variant="contained" color="primary" onClick={(e) => handleEdit(item)} className={classes.edit}>
+                    <Tooltip title="Edit Item"  placement="top">
+                        <EditIcon />
+                    </Tooltip>
+                  </Button>
               <Modal
                   className={classes.modal}
                   open={open}
@@ -235,13 +247,13 @@ export const MoviesTable = ({movies}) => {
                     <Card className={classes.card}>
                       <CardActionArea>
                         <CardContent>
-                          <Typography gutterBottom variant="p" component="h2">
+                          <Typography gutterBottom variant="p" component="h2" m={2}>
                             Movie Title - {title}
                           </Typography>
-                          <Typography variant="h6" gutterBottom>
+                          <Typography variant="h6" gutterBottom m={2}>
                             Genre - {genre}
                           </Typography>
-                          <Typography variant="h6" gutterBottom>
+                          <Typography variant="h6" gutterBottom m={2}>
                             Released Year - {year}
                           </Typography>
                         </CardContent>
@@ -253,14 +265,17 @@ export const MoviesTable = ({movies}) => {
               </Modal>
                | 
               <Button variant="contained" color="secondary" className={classes.delete} onClick={(e) => handleDelete(item)}>
-                <DeleteIcon />
+                <Tooltip title="Delete" placement="top">
+                  <DeleteIcon />
+                </Tooltip>
               </Button>
               </StyledTableCell>
             </StyledTableRow>
-          ))}
+          )):null}
         </TableBody>
       </Table>
-    </TableContainer>
+    </TableContainer>) : null}
+   </div>
   );
 }
 export default MoviesTable

@@ -8,23 +8,23 @@ import { getItemsData, postMovieData } from '../../redux/DataRedux/actionCreator
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    border:"2px solid black",
     height:"500px",
     width:"400px",
     background:"black",
-    opacity:"0.8",
+    opacity:"0.9",
     margin:"8% 0% 5% 28%",
     padding:"50px",
     color:"white",
     display:"flex",
     flexDirection:"column",
-    justifyContent:"flex-start"
+    justifyContent:"flex-start",
+    borderRadius:"10px"
   },
   text:{
-    background:"#838383",
+    background:"white",
     margin:"15px",
     textAlign:'center',
-    color:"white",
+    color:"black",
     height:"50px",
     fontWeight:"500",
     padding:"5px",
@@ -77,7 +77,7 @@ export default function Login() {
             <form className={classes.form}>
                 <TextField
                     className={classes.text}
-                    InputProps={{ disableUnderline: true ,style: {color: "white",height:"100%",marginLeft:"20px"}}}
+                    InputProps={{ disableUnderline: true ,style: {color: "black",height:"100%",fontWeight:"600"}}}
                     required
                     fullWidth
                     label="Title of the Movie"
@@ -88,7 +88,7 @@ export default function Login() {
                 />
                 <TextField
                     className={classes.text}
-                    InputProps={{ disableUnderline: true ,style: {color: "white",marginLeft:"20px"}}}
+                    InputProps={{ disableUnderline: true ,style: {color: "black",fontWeight:"600"}}}
                     required
                     fullWidth
                     label="Genre"
@@ -99,7 +99,7 @@ export default function Login() {
                 />
                 <TextField
                     className={classes.text}
-                    InputProps={{ disableUnderline: true ,style: {color: "white",marginLeft:"20px"}}}
+                    InputProps={{ disableUnderline: true ,style: {color: "black",fontWeight:"600"}}}
                     required
                     fullWidth
                     label="Released Year"

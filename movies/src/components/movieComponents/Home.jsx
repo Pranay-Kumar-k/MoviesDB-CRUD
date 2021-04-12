@@ -2,7 +2,7 @@ import React, { useEffect, useState} from 'react';
 import { useSelector, useDispatch} from "react-redux";
 import MoviesTable from './MoviesTable';
 import Button from "@material-ui/core/Button";
-import {useHistory} from "react-router-dom";
+import {Redirect, useHistory} from "react-router-dom";
 import { getItemsData } from '../../redux/DataRedux/actionCreator';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
@@ -60,7 +60,7 @@ export default function Home() {
                     Logout{" "}
                 </Button>
             </div>
-            {!ready ? (<CircularProgress disableShrink />) : (<MoviesTable movies={data} />)}
+            {!ready ? (<CircularProgress disableShrink />) : (<MoviesTable movies={data ? data : null} />)}
         </div>
     )
 }
