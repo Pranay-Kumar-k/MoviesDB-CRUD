@@ -58,10 +58,10 @@ export default function Login() {
   } 
   
   useEffect(() => {
-    setToken(token)
     setTimeout(() => {
-      {Token && history.push("/home")}
+      setToken(token)
     },2000)
+    {Token && history.push("/home")}
   },[Token])
 
   const handleSignIn = (e) => {
