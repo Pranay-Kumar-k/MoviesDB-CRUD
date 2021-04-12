@@ -2,7 +2,7 @@
 An application that consists movies database where we can find movies and can perform CRUD opearations on it.
 
 # Screenshots 
-<img src="screenshots/singup.png" alt="signup">
+<img src="https://github.com/pranaykumar999/MoviesDB-CRUD/blob/main/screenshots/signup.png?raw=true" alt="signup">
 
 <img src="screenshots/login.png" alt="login">
 
