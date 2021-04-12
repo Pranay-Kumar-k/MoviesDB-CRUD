@@ -48,6 +48,7 @@ export default function Login() {
   const [password,setPassword] = useState("");
   const dispatch = useDispatch();
   const history = useHistory();
+  const [Token,setToken] = useState("");
   const {isLoading,isError,isAuth,user,token} = useSelector(state => state.login)
 
   const handleLogin = (e) => {
@@ -57,8 +58,11 @@ export default function Login() {
   } 
   
   useEffect(() => {
-    token && history.push("/home")
-  },[token])
+    setToken(token)
+    setTimeout(() => {
+      {Token && history.push("/home")}
+    },2000)
+  },[Token])
 
   const handleSignIn = (e) => {
     e.preventDefault()
